@@ -9,13 +9,13 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    List<Student> findByLastNameIgnoreCase(String lastName);
-    List<Student> findByFirstNameIgnoreCase(String firstName);
+    List<Student> findByLastNameIgnoreCaseContaining(String lastName);
+    List<Student> findByFirstNameIgnoreCaseContaining(String firstName);
 
     @Query("SELECT s FROM Student s ORDER BY (s.semester1Avg + s.semester2Avg + s.semester3Avg + s.semester4Avg) / 4.0 DESC")
     List<Student> findAllOrderedByOverallAverage();
 
-    List<Student> findByFirstNameAndLastName(String firstName, String lastName);
+    List<Student> findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(String firstName, String lastName);
 
     List<Student> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(String firstName, String lastName);
 

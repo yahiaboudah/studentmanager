@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/student")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -59,16 +60,7 @@ public class StudentController {
 
     @GetMapping("/search")
     public List<Student> searchStudents(@RequestParam(required= false) String firstName, @RequestParam(required= false) String lastName) {
-        
-        if (firstName != null && lastName != null) {
-            return studentRepository.findByFirstNameAndLastName(firstName, lastName);
-        } else if (firstName != null) {
-            return studentRepository.findByFirstName(firstName);
-        } else if (lastName != null) {
-            return studentRepository.findByLastName(lastName);
-        } else {
-            return studentRepository.findAll();
-        }
+        return studentService.searchStudentsByFirstAndLastName(firstName, lastName);
         // return studentService.searchByFullName(firstName, lastName);
     }
 

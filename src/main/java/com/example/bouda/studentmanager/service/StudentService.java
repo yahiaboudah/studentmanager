@@ -49,6 +49,18 @@ public class StudentService {
         return studentRepository.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(firstName, lastName);
     }
 
+    public List<Student> searchStudentsByFirstAndLastName(String firstName, String lastName) {
+        if (firstName != null && lastName != null) {
+            return studentRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(firstName, lastName);
+        } else if (firstName != null) {
+            return studentRepository.findByFirstNameIgnoreCaseContaining(firstName);
+        } else if (lastName != null) {
+            return studentRepository.findByLastNameIgnoreCaseContaining(lastName);
+        } else {
+            return studentRepository.findAll();
+        }
+    }
+
     public List<Student> searchStudentsByStudentNumber(String studentNumber) {
         return studentRepository.findByStudentNumberContaining(studentNumber);
     }
