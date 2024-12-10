@@ -58,7 +58,22 @@ public class StudentController {
     }
 
     @GetMapping("/search")
-    public List<Student> searchStudentsByLastName(@RequestParam String lastName) {
-        return studentService.searchByLastName(lastName);
+    public List<Student> searchStudents(@RequestParam(required= false) String firstName, @RequestParam(required= false) String lastName) {
+        
+        if (firstName != null && lastName != null) {
+            return studentRepository.findByFirstNameAndLastName(firstName, lastName);
+        } else if (firstName != null) {
+            return studentRepository.findByFirstName(firstName);
+        } else if (lastName != null) {
+            return studentRepository.findByLastName(lastName);
+        } else {
+            return studentRepository.findAll();
+        }
+        // return studentService.searchByFullName(firstName, lastName);
+    }
+
+    @GetMapping("/number")
+    public List<Student> searchByStudentNumber(@RequestParam String num) {
+        return studentService.searchStudentsByStudentNumber(num);
     }
 }

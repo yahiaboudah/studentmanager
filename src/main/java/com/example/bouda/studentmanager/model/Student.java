@@ -11,6 +11,9 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "student_number", unique = true, nullable = false)
+    private String studentNumber;
+
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -37,13 +40,14 @@ public class Student {
         return MathUtils.round((semester1Avg + semester2Avg + semester3Avg + semester4Avg) / 4.0);
     }
 
-    private double roundDecimal(double value) {
-        return Math.round(value * 100.0) / 100.0;
-    }
-
     public Student() {}
 
     // Getters
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
     public Long getId() {
         return id;
     }
@@ -79,6 +83,10 @@ public class Student {
     // Setters
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     public void setLastName(String lastName) {

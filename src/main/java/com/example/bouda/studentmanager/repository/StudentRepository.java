@@ -14,4 +14,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("SELECT s FROM Student s ORDER BY (s.semester1Avg + s.semester2Avg + s.semester3Avg + s.semester4Avg) / 4.0 DESC")
     List<Student> findAllOrderedByOverallAverage();
+
+    List<Student> findByFirstNameAndLastName(String firstName, String lastName);
+
+    List<Student> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(String firstName, String lastName);
+
+    @Query("SELECT s FROM Student s WHERE s.studentNumber LIKE %:studentNumber%")
+    List<Student> findByStudentNumberContaining(String studentNumber);
 }

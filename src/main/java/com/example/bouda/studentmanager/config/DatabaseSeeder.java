@@ -53,9 +53,15 @@ public class DatabaseSeeder {
             studentRepository.deleteAll();
 
             List<Student> students = new ArrayList<>();
+
             for (String firstName : firstNames) {
             for (int i = 0; i < 2; i++) { 
+                    
                     Student student = new Student();
+
+                    String studentNumber = String.format("%08d", random.nextInt(100000000));
+
+                    student.setStudentNumber(studentNumber);
                     student.setFirstName(firstName);
                     student.setLastName(lastNames[random.nextInt(lastNames.length)]);
                     

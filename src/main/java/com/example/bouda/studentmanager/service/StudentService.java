@@ -45,7 +45,15 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> searchByLastName(String lastName) {
-        return studentRepository.findByLastNameIgnoreCase(lastName);
+    public List<Student> searchByFullName(String firstName, String lastName) {
+        return studentRepository.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(firstName, lastName);
     }
+
+    public List<Student> searchStudentsByStudentNumber(String studentNumber) {
+        return studentRepository.findByStudentNumberContaining(studentNumber);
+    }
+
+    // public List<Student> searchByLastName(String lastName) {
+    //     return studentRepository.findByLastNameIgnoreCase(lastName);
+    // }
 }
