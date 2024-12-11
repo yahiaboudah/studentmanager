@@ -1,7 +1,9 @@
 package com.example.bouda.studentmanager.config;
 
 import com.example.bouda.studentmanager.model.Student;
+import com.example.bouda.studentmanager.model.Spec;
 import com.example.bouda.studentmanager.repository.StudentRepository;
+import com.example.bouda.studentmanager.repository.SpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -47,10 +49,17 @@ public class DatabaseSeeder {
     };
 
     @Bean
-    public CommandLineRunner initDatabase(StudentRepository studentRepository) {
+    public CommandLineRunner initDatabase(StudentRepository studentRepository, SpecRepository specRepository) {
         return args -> {
             // Clear existing data
             studentRepository.deleteAll();
+            specRepository.deleteAll();
+
+            Spec spec1 = new Spec("GL", 40);
+            Spec spec2 = new Spec("SCI", 20);
+            Spec spec3 = new Spec("SI", 40);
+            Spec spec4 = new Spec("TI", 40);
+            specRepository.saveAll(List.of(spec1, spec2, spec3, spec4));
 
             List<Student> students = new ArrayList<>();
 
@@ -71,7 +80,7 @@ public class DatabaseSeeder {
                     student.setSemester4Avg(formatDecimal(10 + random.nextDouble() * 10));
 
                     students.add(student);
-                }
+                }   
             }
             
             studentRepository.saveAll(students);
