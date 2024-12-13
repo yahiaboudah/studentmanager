@@ -22,7 +22,7 @@ public class SpecService {
         return specRepository.findById(id);
     }
 
-    public Optional<Spec> getSpecByName(String title) {
+    public Spec getSpecByName(String title) {
         return specRepository.findSpecByName(title);
     }
 
@@ -32,5 +32,14 @@ public class SpecService {
 
     public void deleteSpec(Long id) {
         specRepository.deleteById(id);
+    }
+
+    public List<Spec> searchSpecByName(String name) {
+        if(name != null) {
+            return specRepository.findByNameIgnoreCaseContaining(name);
+        }
+        else {
+            return specRepository.findAll();
+        }
     }
 }

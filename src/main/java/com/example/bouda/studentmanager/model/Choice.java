@@ -1,6 +1,9 @@
 package com.example.bouda.studentmanager.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "choice")
@@ -10,6 +13,7 @@ public class Choice {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
@@ -20,6 +24,8 @@ public class Choice {
     @Column(name = "choice_order")
     private Integer choiceOrder;
 
+    private String title;
+
     // Constructors
     public Choice() {
     }
@@ -29,7 +35,6 @@ public class Choice {
         this.spec = spec;
         this.choiceOrder = choiceOrder;
     }
-
     // Getters
     public Long getId() {
         return id;

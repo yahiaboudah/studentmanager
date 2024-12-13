@@ -3,6 +3,9 @@ package com.example.bouda.studentmanager.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 @Table(name = "spec")
 public class Spec {
@@ -17,6 +20,7 @@ public class Spec {
     private Integer availablePlaces;
 
     @OneToMany(mappedBy = "spec", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Choice> choices;
 
     // Constructors

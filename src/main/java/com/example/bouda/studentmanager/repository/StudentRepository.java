@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
+    
     List<Student> findByLastNameIgnoreCaseContaining(String lastName);
     List<Student> findByFirstNameIgnoreCaseContaining(String firstName);
 
@@ -16,6 +17,13 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAllOrderedByOverallAverage();
 
     List<Student> findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(String firstName, String lastName);
+
+    List<Student> findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContainingAndStudentNumberContaining(String firstName, String lastName, String studentNumber);
+
+    List<Student> findByFirstNameIgnoreCaseContainingAndStudentNumberContaining(String firstName, String studentNumber);
+    List<Student> findByLastNameIgnoreCaseContainingAndStudentNumberContaining(String firstName, String studentNumber);
+    
+
 
     List<Student> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(String firstName, String lastName);
 

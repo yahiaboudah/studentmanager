@@ -53,4 +53,9 @@ public class SpecController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/search")
+    public List<Spec> searchSpecs(@RequestParam(required= false) String name) {
+        return specService.searchSpecByName(name);
+    }
 } 

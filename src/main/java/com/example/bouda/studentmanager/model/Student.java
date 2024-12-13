@@ -32,8 +32,14 @@ public class Student {
     @Column(name = "semester4_avg")
     private Double semester4Avg;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Choice> choices;
+
+    private List<String> choicesList;
+
+    @ManyToOne
+    @JoinColumn(name = "spec_id")
+    private Spec assignedSpec;
 
     @Transient
     public Double getOverallAverage() {
@@ -46,6 +52,22 @@ public class Student {
 
     public String getStudentNumber() {
         return studentNumber;
+    }
+
+    public Spec getAssignedSpec() {
+        return this.assignedSpec;
+    }
+
+    public void setAssignedSpec(Spec assignedSpec) {
+        this.assignedSpec = assignedSpec;
+    }
+
+    public List<String> getChoicesList(){
+        return this.choicesList;
+    }
+
+    public void setChoiceList(List<String> choiceList) {
+        this.choicesList = choicesList;
     }
 
     public Long getId() {
@@ -114,6 +136,9 @@ public class Student {
     }
 
     public void setChoices(List<Choice> choices) {
+        if(this.choices != null) {
+            this.choices.retainAll(choices);
+        }
         this.choices = choices;
     }
 }

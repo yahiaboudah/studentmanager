@@ -2,8 +2,10 @@ package com.example.bouda.studentmanager.config;
 
 import com.example.bouda.studentmanager.model.Student;
 import com.example.bouda.studentmanager.model.Spec;
+import com.example.bouda.studentmanager.model.Choice;
 import com.example.bouda.studentmanager.repository.StudentRepository;
 import com.example.bouda.studentmanager.repository.SpecRepository;
+import com.example.bouda.studentmanager.repository.ChoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -48,39 +50,68 @@ public class DatabaseSeeder {
         "Khamis", "Khatibi", "Khattab", "Khayat", "Khofri"
     };
 
+    private String[] spex = {
+        "GL", "SCI", "TI", "SI"
+    };
+
     @Bean
-    public CommandLineRunner initDatabase(StudentRepository studentRepository, SpecRepository specRepository) {
+    public CommandLineRunner initDatabase(StudentRepository studentRepository, SpecRepository specRepository, ChoiceRepository choiceRepository) {
         return args -> {
             // Clear existing data
             studentRepository.deleteAll();
             specRepository.deleteAll();
+            choiceRepository.deleteAll();
 
-            Spec spec1 = new Spec("GL", 40);
-            Spec spec2 = new Spec("SCI", 20);
-            Spec spec3 = new Spec("SI", 40);
-            Spec spec4 = new Spec("TI", 40);
-            specRepository.saveAll(List.of(spec1, spec2, spec3, spec4));
+            Spec spec1 = new Spec(spex[0], 40);
+            Spec spec2 = new Spec(spex[1], 20);
+            Spec spec3 = new Spec(spex[2], 40);
+            Spec spec4 = new Spec(spex[3], 40);
+            List<Spec> specsList = List.of(spec1, spec2, spec3, spec4);
+            specRepository.saveAll(specsList);
 
             List<Student> students = new ArrayList<>();
 
             for (String firstName : firstNames) {
-            for (int i = 0; i < 2; i++) { 
-                    
-                    Student student = new Student();
+                for (int i = 0; i < 2; i++) { 
+                        
+                        Student student = new Student();
 
-                    String studentNumber = String.format("%08d", random.nextInt(100000000));
+                        String studentNumber = String.format("%08d", random.nextInt(100000000));
 
-                    student.setStudentNumber(studentNumber);
-                    student.setFirstName(firstName);
-                    student.setLastName(lastNames[random.nextInt(lastNames.length)]);
-                    
-                    student.setSemester1Avg(formatDecimal(10 + random.nextDouble() * 10));
-                    student.setSemester2Avg(formatDecimal(10 + random.nextDouble() * 10));
-                    student.setSemester3Avg(formatDecimal(10 + random.nextDouble() * 10));
-                    student.setSemester4Avg(formatDecimal(10 + random.nextDouble() * 10));
+                        student.setStudentNumber(studentNumber);
+                        student.setFirstName(firstName);
+                        student.setLastName(lastNames[random.nextInt(lastNames.length)]);
+                        
+                        student.setSemester1Avg(formatDecimal(10 + random.nextDouble() * 10));
+                        student.setSemester2Avg(formatDecimal(10 + random.nextDouble() * 10));
+                        student.setSemester3Avg(formatDecimal(10 + random.nextDouble() * 10));
+                        student.setSemester4Avg(formatDecimal(10 + random.nextDouble() * 10));
 
-                    students.add(student);
-                }   
+                        List<Choice> newChoices = new ArrayList<>();
+                        List<Integer> usedIndices = new ArrayList<>();
+                        
+                        for(int j=0; j<specsList.size(); j++) {
+                            
+                            Choice choice = new Choice();
+                            
+                            int randomIndex;
+                            do {
+                                randomIndex = random.nextInt(specsList.size());
+                            } while (usedIndices.contains(randomIndex));
+
+                            usedIndices.add(randomIndex);
+
+                            Spec specialty = specsList.get(randomIndex);
+                            choice.setStudent(student);
+                            choice.setSpec(specialty);
+                            choice.setChoiceOrder(j + 1);
+                            newChoices.add(choice);
+                        }
+                        
+                        student.setChoices(newChoices);
+
+                        students.add(student);
+                    }   
             }
             
             studentRepository.saveAll(students);

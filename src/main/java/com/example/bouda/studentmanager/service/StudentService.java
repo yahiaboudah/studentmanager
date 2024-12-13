@@ -65,6 +65,34 @@ public class StudentService {
         return studentRepository.findByStudentNumberContaining(studentNumber);
     }
 
+    public List<Student> searchStudentByNameAndNumber(String firstName, String lastName, String studentNumber) {
+
+        if(firstName != null && lastName != null && studentNumber != null) {
+            return studentRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContainingAndStudentNumberContaining(firstName, lastName, studentNumber);
+        }
+        else if (firstName != null && lastName != null && studentNumber == null) {
+            return studentRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(firstName, lastName);
+        }
+        else if (firstName != null && lastName == null && studentNumber != null) {
+            return studentRepository.findByFirstNameIgnoreCaseContainingAndStudentNumberContaining(firstName, studentNumber);
+        }
+        else if (firstName != null && lastName == null && studentNumber == null) {
+            return studentRepository.findByFirstNameIgnoreCaseContaining(firstName);
+        }
+        else if (firstName == null && lastName != null && studentNumber != null) {
+            return studentRepository.findByLastNameIgnoreCaseContainingAndStudentNumberContaining(lastName, studentNumber);
+        }
+        else if(firstName == null && lastName != null && studentNumber == null) {
+            return studentRepository.findByLastNameIgnoreCaseContaining(lastName);
+        }
+        else if(firstName == null && lastName == null && studentNumber != null) {
+            return studentRepository.findByStudentNumberContaining(studentNumber);
+        }
+        else {
+            return studentRepository.findAllOrderedByOverallAverage();
+        }
+    }
+
     // public List<Student> searchByLastName(String lastName) {
     //     return studentRepository.findByLastNameIgnoreCase(lastName);
     // }

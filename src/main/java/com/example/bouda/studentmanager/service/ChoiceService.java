@@ -30,6 +30,10 @@ public class ChoiceService {
         choiceRepository.deleteById(id);
     }
 
+    public void deleteAllChoices() {
+        choiceRepository.deleteAll();
+    }
+
     public void deleteAllChoicesByStudentId(Long studentId) {
         List<Choice> choices = choiceRepository.findByStudentId(studentId);
         choiceRepository.deleteAll(choices);
