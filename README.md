@@ -35,11 +35,11 @@ The Student Manager Application is a Java-based web application that allows user
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/yahiaboudah/studentmanager.git
-   cd student-manager
+   cd studentmanager
    ```
 
 2. **Set Up PostgreSQL**:
-   - Create a new database for the application.
+   - Create a new database for the application (here I used Docker. If using Docker, run: ```docker-compose up``` in the same directory).
    - Update the `application.properties` file with your database credentials.
 
 3. **Build the Application**:
