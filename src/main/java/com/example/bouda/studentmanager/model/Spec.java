@@ -23,6 +23,10 @@ public class Spec {
     @JsonIgnore
     private List<Choice> choices;
 
+    @OneToMany(mappedBy = "assignedSpec", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Student> students;
+
     // Constructors
     public Spec() {
     }

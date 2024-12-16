@@ -51,6 +51,7 @@ public class StudentController {
         
         Student student = new Student();
 
+        student.setStudentNumber((String) studentDetails.get("studentNumber"));
         student.setFirstName((String) studentDetails.get("firstName"));
         student.setLastName((String) studentDetails.get("lastName"));
         student.setSemester1Avg(Double.valueOf(studentDetails.get("semester1Avg").toString()));
@@ -72,6 +73,8 @@ public class StudentController {
             newChoices.add(choice);
         }
         student.setChoices(newChoices);
+
+        logger.info("XXX Student number {} ", student.getStudentNumber());
 
         return ResponseEntity.ok(studentService.createOrUpdateStudent(student));
     }
